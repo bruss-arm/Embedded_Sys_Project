@@ -1,6 +1,6 @@
 This is the Github for the Embedded Systems Project; We will be using Keil Studio Online. Please create a seperate .cpp and .h file for each component. Also, use variables for the pins so it is easier to change between the lab board and the project board.
 
-Also, for testing purposes, create a seperate branch incase something goes wrong it doesn't affect everyone else.
+Also, for testing purposes, create a seperate branch just in case something goes wrong it doesn't affect everyone else.
 
 The RFID reader will use SPI while the 16x2 LCD will use I2C. Everything else will be using basic GPIO pins.
 
