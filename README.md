@@ -4,8 +4,13 @@ Also, for testing purposes, create a seperate branch just in case something goes
 
 The RFID reader will use SPI while the 16x2 LCD will use I2C. Everything else will be using basic GPIO pins.
 
-Here's a link to mbed.h documentation, should be the same across boards (API references and tutorials > Drivers): https://os.mbed.com/docs/mbed-os/v6.15/quick-start/index.html
-Here's a link to using Github with Keil Studio Online: https://developer.arm.com/documentation/102497/1-5/Source-control/Work-with-Git
+Here's a link to mbed.h documentation, should be the same across boards (API references and tutorials > Drivers):
+
+https://os.mbed.com/docs/mbed-os/v6.15/quick-start/index.html
+
+Here's a link to using Github with Keil Studio Online: 
+
+https://developer.arm.com/documentation/102497/1-5/Source-control/Work-with-Git
 
 Also, we will be using version 6.15.1, the attached photo shows where to check it.
 
