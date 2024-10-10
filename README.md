@@ -1,5 +1,7 @@
 This is the Github for the Embedded Systems Project; We will be using Keil Studio Online. Please create a seperate .cpp and .h file for each component. Also, use variables for the pins so it is easier to change between the lab board and the project board.
 
+Also, for testing purposes, create a seperate branch incase something goes wrong it doesn't affect everyone else.
+
 The RFID reader will use SPI while the 16x2 LCD will use I2C. Everything else will be using basic GPIO pins.
 
 Here's a link to mbed.h documentation, should be the same across boards (API references and tutorials > Drivers): https://os.mbed.com/docs/mbed-os/v6.15/quick-start/index.html
