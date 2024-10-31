@@ -48,7 +48,7 @@ int main(void)
 
             keypadInput = Keypad_Reading();
             serial_port.write(&keypadInput,sizeof(keypadInput)); // serial output for keypad
-            wait_us(192500); // button press wait (maybe needs tuning)
+            wait_us(200000); // button press wait (maybe needs tuning)
         }
         return 0;
 }
