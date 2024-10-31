@@ -5,10 +5,14 @@
 
 #include "mbed.h"
 #include "Keypad.h"
+#include "Password.h"
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN                                                     USBTX
 #define TARGET_RX_PIN                                                     USBRX
+
+char testArray[4] = {'1','2','3','4'};
+char expectedVal;
 
 // Create a BufferedSerial object to be used by the system I/O retarget code.
 static BufferedSerial serial_port(TARGET_TX_PIN, TARGET_RX_PIN, 9600);
@@ -46,9 +50,21 @@ int main(void)
             wait_us(500000);
             */
 
+            /*
             keypadInput = Keypad_Reading();
             serial_port.write(&keypadInput,sizeof(keypadInput)); // serial output for keypad
             wait_us(200000); // button press wait (maybe needs tuning)
+            */
+
+            if (Password_Check(testArray) == true) {printf("Correct!\n\r");}
+            else {printf("Wrong!\n\r");}
+            
+            printf("expected value: ");
+
+            for (int i = 0; i < 4; i++) {
+                printf ("%c",testArray[i]);
+            }
+            printf("\n\r");
         }
         return 0;
 }

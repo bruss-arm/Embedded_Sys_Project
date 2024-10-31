@@ -14,8 +14,9 @@ static DigitalIn columnFour(PC_7,PullDown);
 
 static int usPinSetDelay = 50;
 
+void wait() {wait_us(200000);}
 
-static char Keypad_Reading(){
+char Keypad_Reading(){
     rowOne.write(1), rowTwo.write(1), rowThree.write(1), rowFour.write(1);
 
 if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| columnFour.read() == 1){
@@ -26,10 +27,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowOne.write(0);
             break;
             }
-        else if (columnOne.read() == 1){ return '1';}
-        else if (columnTwo.read() == 1) { return '2';}
-        else if (columnThree.read() == 1){ return '3';}
-        else if (columnFour.read() == 1){ return 'A';}
+        else if (columnOne.read() == 1){wait(); return '1';}
+        else if (columnTwo.read() == 1) {wait(); return '2';}
+        else if (columnThree.read() == 1){wait(); return '3';}
+        else if (columnFour.read() == 1){wait(); return 'A';}
         else rowOne.write(0);
     }
 
@@ -40,10 +41,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowTwo.write(0);
             break;
             }
-        else if (columnOne.read() == 1){ return '4';}
-        else if (columnTwo.read() == 1){ return '5';}
-        else if (columnThree.read() == 1){ return '6';}
-        else if (columnFour.read() == 1){ return 'B';}
+        else if (columnOne.read() == 1){wait(); return '4';}
+        else if (columnTwo.read() == 1){wait(); return '5';}
+        else if (columnThree.read() == 1){wait(); return '6';}
+        else if (columnFour.read() == 1){wait(); return 'B';}
         else rowTwo.write(0);
     }
 
@@ -54,10 +55,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
              rowThree.write(0);
              break;
              }
-        else if (columnOne.read() == 1){ return '7';}
-        else if (columnTwo.read() == 1){ return '8';}
-        else if (columnThree.read() == 1){ return '9';}
-        else if (columnFour.read() == 1){ return 'C';}
+        else if (columnOne.read() == 1){wait(); return '7';}
+        else if (columnTwo.read() == 1){wait(); return '8';}
+        else if (columnThree.read() == 1){wait(); return '9';}
+        else if (columnFour.read() == 1){wait(); return 'C';}
         else rowThree.write(0);
     }
 
@@ -68,10 +69,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowFour.write(0);
             break;
             }
-        else if (columnOne.read() == 1){ return '*';}
-        else if (columnTwo.read() == 1){ return '0';}
-        else if (columnThree.read() == 1){ return '#';}
-        else if (columnFour.read() == 1){ return 'D';}
+        else if (columnOne.read() == 1){wait(); return '*';}
+        else if (columnTwo.read() == 1){wait(); return '0';}
+        else if (columnThree.read() == 1){wait(); return '#';}
+        else if (columnFour.read() == 1){wait(); return 'D';}
         
     }
 return '?';
