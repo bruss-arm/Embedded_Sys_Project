@@ -4,7 +4,7 @@
  */
 
 #include "mbed.h"
-#include "Keypad.cpp"
+#include "Keypad.h"
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN                                                     USBTX
