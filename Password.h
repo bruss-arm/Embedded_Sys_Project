@@ -1,1 +1,2 @@
-bool Password_Check(char expectedInput [4]);
+static void InitializePersonnel();
+bool Password_Check();

@@ -11,8 +11,23 @@
 #define TARGET_TX_PIN                                                     USBTX
 #define TARGET_RX_PIN                                                     USBRX
 
-char testArray[4] = {'1','2','3','4'};
+InterruptIn ExitButton(PC_13);
+DigitalOut redLED(PC_6);
+DigitalOut greenLED(PC_8);
+
+
+
+// char testArray[4] = {'1','2','3','4'};
 char expectedVal;
+int attemptCounter = 1;
+int unlockTimeS = 5;
+int unlockTimeuS = unlockTimeS *1000000;
+int incorrectBlinkmS = 500;
+int incorrectBlinkuS = incorrectBlinkmS * 1000;
+int overBlinkmS = 250;
+int overBlinkuS = overBlinkmS * 1000;
+int timeOutS = 5;
+int timeOutuS = timeOutS *1000000;
 
 // Create a BufferedSerial object to be used by the system I/O retarget code.
 static BufferedSerial serial_port(TARGET_TX_PIN, TARGET_RX_PIN, 9600);
@@ -22,12 +37,56 @@ FileHandle *mbed::mbed_override_console(int fd)
     return &serial_port;
 }
 
+void Lock(){
+    greenLED = 0;
+    redLED = 1;
+}
 
+void Unlock(){
+    redLED = 0;
+    greenLED = 1;
+    wait_us(unlockTimeuS);
+    Lock();
+}
 
+void CorrectPasscode() {
+    //printf("Correct!\n\r");
+    attemptCounter = 1;
+    Unlock();
+}
+
+void IncorrectPasscode() {
+    printf("Wrong!\n\r");
+    redLED = 0;
+    wait_us(incorrectBlinkuS);
+    for (int i = 0; i < attemptCounter; i++){
+        redLED = 1;
+        wait_us(incorrectBlinkuS);
+        redLED = 0;
+        wait_us(incorrectBlinkuS);
+    }
+    attemptCounter += 1;
+}
+
+void OverAttemptLimit(){
+    printf("Too many attempts!");
+    for (int i = 0; i < 20; i++){
+    redLED = 0;
+    //wait_us(20);
+    greenLED = 1;
+    wait_us(overBlinkuS);
+    greenLED = 0;
+   //wait_us(20);
+    redLED = 1;
+    wait_us(overBlinkuS);
+    }
+    attemptCounter = 1;   
+}
 
 int main(void)
 {
     char keypadInput;
+    ExitButton.rise(&Unlock); //interrupt to let people exit from inside
     // print to the console using the `serial_port` object.
     /*
     printf(
@@ -38,7 +97,7 @@ int main(void)
     );
     */
         while(1){
-            
+            redLED = 1;
            /* if (led1 == 1){
                 printf("LED is on  :)\n\r");
                 led1 = 0;
@@ -56,15 +115,24 @@ int main(void)
             wait_us(200000); // button press wait (maybe needs tuning)
             */
 
-            if (Password_Check(testArray) == true) {printf("Correct!\n\r");}
-            else {printf("Wrong!\n\r");}
-            
+            if (Password_Check() == true) {
+                CorrectPasscode();
+                }
+            else if (attemptCounter == 3){
+                OverAttemptLimit();
+                wait_us(timeOutuS);
+                }    
+            else {
+                IncorrectPasscode();
+                }
+            /*
             printf("expected value: ");
 
             for (int i = 0; i < 4; i++) {
                 printf ("%c",testArray[i]);
             }
             printf("\n\r");
+            */
         }
         return 0;
 }

@@ -3,14 +3,38 @@
 #include "Password.h"
 #include <stdio.h>
 #include <ctype.h>
+#include "map"
+#include "string"
+#include "iostream"
 
 char userInput[4];
+string input;
 char currentInput;
 int correctDigits;
 
-bool Password_Check(char expectedInput[4]) {
+map <string, string> Personnel;
+/*
+ = {
+    {"9679","Brandon"},
+    {"1234","Dakota"},
+    {"5678","Will"}
+};
+*/
+
+static void InitializePersonnel() {
+    Personnel["9679"] = "Brandon";
+    Personnel["1234"] = "Dakota";
+    Personnel["5678"] = "Will";
+};
+
+
+
+bool Password_Check() {
+    /*
     correctDigits = 0;
-printf("\n\ruser input: ");
+    printf("\n\ruser input: ");
+    */
+    InitializePersonnel();
 for (int i = 0; i < 4; i++) {
 
     currentInput = Keypad_Reading();
@@ -18,11 +42,20 @@ for (int i = 0; i < 4; i++) {
     currentInput = Keypad_Reading();
      }
      userInput[i] = currentInput;
-     printf ("%c",currentInput);
+     //printf ("%c",currentInput);
     }
-printf("\n\r");
+    userInput[4] = '\0';
+    input = userInput;
+    //input += '/0';
+    cout << "Keypad input:" << input << endl;
 
-for (int i = 0; i < 4; i++){
+auto it = Personnel.find(input);
+if (it != Personnel.end()){
+    cout << "Hello " << Personnel.find(input)->second << "! \n\r";
+    return true;
+}
+else {return false;}
+/* for (int i = 0; i < 4; i++){
     //printf("%d",i);
 
     if (userInput[i] != expectedInput[i]) {
@@ -39,6 +72,7 @@ for (int i = 0; i < 4; i++){
     printf("Case 2");
         return false;
         }
+        */
     }
 
 
