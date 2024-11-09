@@ -57,12 +57,10 @@ void CorrectPasscode() {
 
 void IncorrectPasscode() {
     printf("Wrong!\n\r");
-    redLED = 0;
-    wait_us(incorrectBlinkuS);
     for (int i = 0; i < attemptCounter; i++){
-        redLED = 1;
-        wait_us(incorrectBlinkuS);
         redLED = 0;
+        wait_us(incorrectBlinkuS);
+        redLED = 1;
         wait_us(incorrectBlinkuS);
     }
     attemptCounter += 1;
