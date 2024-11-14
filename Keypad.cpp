@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "Keypad.h"
+#include "Buzzer.h"
 
 
 static DigitalOut rowOne(PA_10);
@@ -12,9 +13,12 @@ static DigitalIn columnTwo(PA_8,PullDown);
 static DigitalIn columnThree(PA_9,PullDown);
 static DigitalIn columnFour(PC_7,PullDown);
 
+const int buzzerWait_ms = 100;
+const float buzzerTone = 1.0/262.0;
+
 static int usPinSetDelay = 50;
 
-void wait() {wait_us(200000);}
+void wait() {wait_us(100000);}
 
 char Keypad_Reading(){
     rowOne.write(1), rowTwo.write(1), rowThree.write(1), rowFour.write(1);
@@ -27,10 +31,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowOne.write(0);
             break;
             }
-        else if (columnOne.read() == 1){wait(); return '1';}
-        else if (columnTwo.read() == 1) {wait(); return '2';}
-        else if (columnThree.read() == 1){wait(); return '3';}
-        else if (columnFour.read() == 1){wait(); return 'A';}
+        else if (columnOne.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '1';}
+        else if (columnTwo.read() == 1) {wait(); Tone(buzzerTone, buzzerWait_ms); return '2';}
+        else if (columnThree.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '3';}
+        else if (columnFour.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return 'A';}
         else rowOne.write(0);
     }
 
@@ -41,10 +45,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowTwo.write(0);
             break;
             }
-        else if (columnOne.read() == 1){wait(); return '4';}
-        else if (columnTwo.read() == 1){wait(); return '5';}
-        else if (columnThree.read() == 1){wait(); return '6';}
-        else if (columnFour.read() == 1){wait(); return 'B';}
+        else if (columnOne.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '4';}
+        else if (columnTwo.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '5';}
+        else if (columnThree.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '6';}
+        else if (columnFour.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return 'B';}
         else rowTwo.write(0);
     }
 
@@ -55,10 +59,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
              rowThree.write(0);
              break;
              }
-        else if (columnOne.read() == 1){wait(); return '7';}
-        else if (columnTwo.read() == 1){wait(); return '8';}
-        else if (columnThree.read() == 1){wait(); return '9';}
-        else if (columnFour.read() == 1){wait(); return 'C';}
+        else if (columnOne.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '7';}
+        else if (columnTwo.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '8';}
+        else if (columnThree.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '9';}
+        else if (columnFour.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return 'C';}
         else rowThree.write(0);
     }
 
@@ -69,10 +73,10 @@ if (columnOne.read() == 1 || columnTwo.read() == 1 || columnThree.read() == 1|| 
             rowFour.write(0);
             break;
             }
-        else if (columnOne.read() == 1){wait(); return '*';}
-        else if (columnTwo.read() == 1){wait(); return '0';}
-        else if (columnThree.read() == 1){wait(); return '#';}
-        else if (columnFour.read() == 1){wait(); return 'D';}
+        else if (columnOne.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '*';}
+        else if (columnTwo.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '0';}
+        else if (columnThree.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return '#';}
+        else if (columnFour.read() == 1){wait(); Tone(buzzerTone, buzzerWait_ms); return 'D';}
         
     }
 return '?';

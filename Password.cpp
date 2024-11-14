@@ -7,7 +7,7 @@
 #include "string"
 #include "iostream"
 
-char userInput[4];
+char userInput[5];
 string input;
 char currentInput;
 int correctDigits;
@@ -42,6 +42,13 @@ for (int i = 0; i < 4; i++) {
     currentInput = Keypad_Reading();
      }
      userInput[i] = currentInput;
+     if (currentInput == 'C'){
+         i = -1;
+     }
+     else if (currentInput == 'B'){
+         i -= 2;
+     }
+     else{};
      //printf ("%c",currentInput);
     }
     userInput[4] = '\0';

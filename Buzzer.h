@@ -1,0 +1,1 @@
+void Tone(float period, int duration_ms);

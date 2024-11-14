@@ -6,28 +6,32 @@
 #include "mbed.h"
 #include "Keypad.h"
 #include "Password.h"
+#include "Buzzer.h"
 
 // Specify different pins to test printing on UART other than the console UART.
 #define TARGET_TX_PIN                                                     USBTX
 #define TARGET_RX_PIN                                                     USBRX
 
 InterruptIn ExitButton(PC_13);
-DigitalOut redLED(PC_6);
-DigitalOut greenLED(PC_8);
+DigitalOut redLED(PA_13);
+DigitalOut greenLED(PA_14);
 
 
 
 // char testArray[4] = {'1','2','3','4'};
 char expectedVal;
 int attemptCounter = 1;
-int unlockTimeS = 5;
-int unlockTimeuS = unlockTimeS *1000000;
-int incorrectBlinkmS = 500;
-int incorrectBlinkuS = incorrectBlinkmS * 1000;
-int overBlinkmS = 250;
-int overBlinkuS = overBlinkmS * 1000;
-int timeOutS = 5;
-int timeOutuS = timeOutS *1000000;
+const int unlockTimeS = 5;
+const int unlockTimemS = unlockTimeS *1000;
+const int incorrectBlinkmS = 500;
+const int incorrectBlinkuS = incorrectBlinkmS * 1000;
+const int overBlinkmS = 500;
+const int timeOutS = 5;
+const int timeOutuS = timeOutS *1000000;
+const int lockBuzzerTimemS= 250;
+const float unlockBuzzer = 1.0/1000.0;
+const float lockBuzzer = 1.0/200.0;
+const float incorrectBuzzer = 1.0/440.0;
 
 // Create a BufferedSerial object to be used by the system I/O retarget code.
 static BufferedSerial serial_port(TARGET_TX_PIN, TARGET_RX_PIN, 9600);
@@ -40,12 +44,14 @@ FileHandle *mbed::mbed_override_console(int fd)
 void Lock(){
     greenLED = 0;
     redLED = 1;
+    Tone(lockBuzzer, lockBuzzerTimemS);
 }
 
 void Unlock(){
     redLED = 0;
     greenLED = 1;
-    wait_us(unlockTimeuS);
+    Tone(unlockBuzzer, unlockTimemS);
+    wait_us(1000);
     Lock();
 }
 
@@ -59,7 +65,7 @@ void IncorrectPasscode() {
     printf("Wrong!\n\r");
     for (int i = 0; i < attemptCounter; i++){
         redLED = 0;
-        wait_us(incorrectBlinkuS);
+        Tone(incorrectBuzzer, incorrectBlinkmS);
         redLED = 1;
         wait_us(incorrectBlinkuS);
     }
@@ -72,13 +78,12 @@ void OverAttemptLimit(){
     redLED = 0;
     //wait_us(20);
     greenLED = 1;
-    wait_us(overBlinkuS);
+    Tone(unlockBuzzer, overBlinkmS);
     greenLED = 0;
-   //wait_us(20);
     redLED = 1;
-    wait_us(overBlinkuS);
+    Tone(lockBuzzer, overBlinkmS);
     }
-    attemptCounter = 1;   
+    attemptCounter = 1;
 }
 
 int main(void)
@@ -96,6 +101,12 @@ int main(void)
     */
         while(1){
             redLED = 1;
+            
+            /*
+            Tone(highPitch,1000);
+            Tone(C_Period,1000);
+            */
+
            /* if (led1 == 1){
                 printf("LED is on  :)\n\r");
                 led1 = 0;
@@ -118,7 +129,6 @@ int main(void)
                 }
             else if (attemptCounter == 3){
                 OverAttemptLimit();
-                wait_us(timeOutuS);
                 }    
             else {
                 IncorrectPasscode();
