@@ -73,7 +73,7 @@ void IncorrectPasscode() {
 }
 
 void OverAttemptLimit(){
-    printf("Too many attempts!");
+    printf("Too many attempts!\n\r");
     for (int i = 0; i < 20; i++){
     redLED = 0;
     //wait_us(20);
